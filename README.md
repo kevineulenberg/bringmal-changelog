@@ -38,12 +38,14 @@ npm run dev
      - `OAUTH_REDIRECT_URI`: `https://your-project.vercel.app/api/callback` (Optional, defaults to auto-detect)
 
 3. **Configure Repo in CMS:**
-   - Open `public/admin/config.yml`.
-   - Update `repo: "your-username/bringmal-changelog"` to your actual repository path.
+   - Open `src/pages/admin.astro`.
+   - Update the `repo: 'kevineulenberg/bringmal-changelog'` field in the `CMS.init` configuration if your repository name changes.
+   - The `base_url` is automatically set to `window.location.origin`, so it works on both localhost and production without manual changes.
 
 ## Content Management
 
 Navigate to `/admin` to access the CMS.
+- **Dynamic Backend**: The CMS automatically connects to your custom OAuth backend (`/api/auth`) on the current domain.
 - **Changelogs**: Feature updates, fixes, etc.
 - **Table Reservations**: Updates specific to the reservation system.
 - **Shop**: Updates specific to the shop system.

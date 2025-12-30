@@ -7,10 +7,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex" />
     <title>Content Manager</title>
-    <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
+    <!-- Note: We are initializing CMS manually in the script below, so we don't link config.yml -->
   </head>
   <body>
     <!-- Include the script that builds the page and powers Decap CMS -->
-    <script is:inline src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
+    <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
+    
+    <script>
+      // @ts-ignore
+      const CMS = window.CMS;
+
+      CMS.init({
+        config: {
+          backend: {
+            name: 'github',
+            repo: 'kevineulenberg/bringmal-changelog',
+            branch: 'main',
+            base_url: window.location.origin, // Dynamically uses the current domain (localhost or vercel)
+            auth_endpoint: 'api/auth'
+          },
+          media_folder: "public/images/uploads",
+          public_folder: "/images/uploads",
+          collections: [
+            {
+              name: "changelogs",
+              label: "Changelogs",
+              folder: "src/content/changelogs",
+              create: true,
+              slug: "{{slug}}",
+              fields: [
+                { label: "Title", name: "title", widget: "string" },
+                { label: "Version", name: "version", widget: "string" },
+                { label: "Date", name: "date", widget: "datetime" },
+                { label: "Type", name: "type", widget: "select", options: ["feature", "fix", "breaking"] },
+                { label: "Category", name: "category", widget: "select", options: ["Table Reservations", "Shop"] },
+                { label: "Body", name: "body", widget: "markdown" }
+              ]
+            },
+            {
+              name: "table-reservations",
+              label: "Table Reservations",
+              folder: "src/content/table-reservations",
+              create: true,
+              slug: "{{slug}}",
+              fields: [
+                { label: "Title", name: "title", widget: "string" },
+                { label: "Date", name: "date", widget: "datetime" },
+                { label: "Status", name: "status", widget: "select", options: ["live", "planned"] },
+                { label: "Body", name: "body", widget: "markdown" }
+              ]
+            },
+            {
+              name: "shop",
+              label: "Shop",
+              folder: "src/content/shop",
+              create: true,
+              slug: "{{slug}}",
+              fields: [
+                { label: "Title", name: "title", widget: "string" },
+                { label: "Date", name: "date", widget: "datetime" },
+                { label: "Status", name: "status", widget: "select", options: ["live", "planned"] },
+                { label: "Body", name: "body", widget: "markdown" }
+              ]
+            }
+          ]
+        }
+      });
+    </script>
   </body>
 </html>
