@@ -36,39 +36,41 @@
 </div>
 
 <script>
-  const buttons = document.querySelectorAll('.filter-btn');
-  const typeSelect = document.getElementById('type-filter');
+  document.addEventListener('astro:page-load', () => {
+    const buttons = document.querySelectorAll('.filter-btn');
+    const typeSelect = document.getElementById('type-filter');
 
-  function dispatchFilter() {
-    const activeBtn = document.querySelector('.filter-btn.active');
-    const category = activeBtn?.getAttribute('data-filter-value') || 'all';
-    // @ts-ignore
-    const type = typeSelect?.value || 'all';
+    function dispatchFilter() {
+      const activeBtn = document.querySelector('.filter-btn.active');
+      const category = activeBtn?.getAttribute('data-filter-value') || 'all';
+      // @ts-ignore
+      const type = typeSelect?.value || 'all';
 
-    const event = new CustomEvent('filter-change', {
-      detail: { category, type }
-    });
-    window.dispatchEvent(event);
-  }
-
-  buttons.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      // Toggle active class
-      buttons.forEach(b => {
-        b.classList.remove('bg-gray-900', 'text-white');
-        b.classList.add('bg-gray-100', 'text-gray-600');
-        b.classList.remove('active');
+      const event = new CustomEvent('filter-change', {
+        detail: { category, type }
       });
-      // @ts-ignore
-      e.target.classList.remove('bg-gray-100', 'text-gray-600');
-      // @ts-ignore
-      e.target.classList.add('bg-gray-900', 'text-white');
-      // @ts-ignore
-      e.target.classList.add('active');
-      
-      dispatchFilter();
-    });
-  });
+      window.dispatchEvent(event);
+    }
 
-  typeSelect?.addEventListener('change', dispatchFilter);
+    buttons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        // Toggle active class
+        buttons.forEach(b => {
+          b.classList.remove('bg-gray-900', 'text-white');
+          b.classList.add('bg-gray-100', 'text-gray-600');
+          b.classList.remove('active');
+        });
+        // @ts-ignore
+        e.target.classList.remove('bg-gray-100', 'text-gray-600');
+        // @ts-ignore
+        e.target.classList.add('bg-gray-900', 'text-white');
+        // @ts-ignore
+        e.target.classList.add('active');
+        
+        dispatchFilter();
+      });
+    });
+
+    typeSelect?.addEventListener('change', dispatchFilter);
+  });
 </script>

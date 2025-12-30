@@ -72,8 +72,9 @@ const latestEntries = allEntries.slice(0, 3);
 </Layout>
 
 <script>
-  window.addEventListener('filter-change', ((e: CustomEvent) => {
-    const { category, type } = e.detail;
+  function handleFilterChange(e: Event) {
+    const customEvent = e as CustomEvent;
+    const { category, type } = customEvent.detail;
     const items = document.querySelectorAll('.entry-item');
     let visibleCount = 0;
 
@@ -98,5 +99,13 @@ const latestEntries = allEntries.slice(0, 3);
     if (noResults) {
       noResults.classList.toggle('hidden', visibleCount > 0);
     }
-  }) as EventListener);
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    // Only attach if we are on the page with the grid (though this script might only load on this page)
+    if (document.getElementById('changelog-grid')) {
+      window.removeEventListener('filter-change', handleFilterChange);
+      window.addEventListener('filter-change', handleFilterChange);
+    }
+  });
 </script>
