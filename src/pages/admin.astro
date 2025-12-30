@@ -12,18 +12,30 @@
     <!-- 1. Disable auto-init -->
     <script is:inline>window.CMS_MANUAL_INIT = true;</script>
 
-    <!-- 2. Define the init function -->
+    <!-- 2. Include the script -->
+    <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
+    
+    <!-- 3. Poll for CMS object and initialize -->
     <script is:inline>
-      function initCMS() {
-        console.log('Decap CMS script loaded. Initializing...');
-        if (!window.CMS) {
-          console.error('window.CMS is undefined!');
-          document.body.innerHTML = '<h1 style="color:red; padding: 20px;">Error: Decap CMS failed to load. Check console.</h1>';
-          return;
-        }
+      const maxAttempts = 50; // 5 seconds total
+      let attempts = 0;
 
-        const CMS = window.CMS;
-        
+      const initInterval = setInterval(() => {
+        attempts++;
+        const CMS = window.CMS || window.NetlifyCMS;
+
+        if (CMS) {
+          clearInterval(initInterval);
+          console.log('CMS object found. Initializing...');
+          initializeCMS(CMS);
+        } else if (attempts >= maxAttempts) {
+          clearInterval(initInterval);
+          console.error('Timeout: CMS object not found after 5 seconds.');
+          document.body.innerHTML = '<div style="padding: 20px; color: red;"><h1>Error Loading CMS</h1><p>The CMS library failed to load. Please refresh the page or check your internet connection.</p></div>';
+        }
+      }, 100);
+
+      function initializeCMS(CMS) {
         try {
           CMS.init({
             config: {
@@ -81,15 +93,12 @@
               ]
             }
           });
-          console.log('CMS.init() called successfully.');
+          console.log('CMS initialized successfully.');
         } catch (e) {
-          console.error('Error during CMS.init():', e);
-          document.body.innerHTML = `<h1 style="color:red; padding: 20px;">Error initializing CMS: ${e.message}</h1>`;
+          console.error('CMS Initialization Error:', e);
+          document.body.innerHTML = `<div style="padding: 20px; color: red;"><h1>Configuration Error</h1><p>${e.message}</p></div>`;
         }
       }
     </script>
-
-    <!-- 3. Load the script and trigger init -->
-    <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js" onload="initCMS()"></script>
   </body>
 </html>
