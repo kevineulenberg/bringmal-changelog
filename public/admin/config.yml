@@ -1,9 +1,9 @@
 backend:
   name: github
-  repo: your-username/bringmal-changelog # REPLACE THIS with your actual GitHub repo (e.g., kevgut/bringmal-changelog)
+  repo: kevineulenberg/bringmal-changelog
   branch: main
-  base_url: "" # Leave empty to use the current domain
-  auth_endpoint: api/auth
+  base_url: https://bringmal-changelog.vercel.app
+  auth_endpoint: oauth
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
