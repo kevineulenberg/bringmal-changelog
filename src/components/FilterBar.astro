@@ -1,0 +1,74 @@
+<div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100 mb-8 sticky top-4 z-10 backdrop-blur-md bg-white/90">
+  <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+    <div class="flex flex-wrap gap-2 w-full md:w-auto">
+      <button 
+        data-filter-group="category" 
+        data-filter-value="all" 
+        class="filter-btn active px-4 py-2 rounded-lg text-sm font-medium bg-gray-900 text-white transition-colors"
+      >
+        All
+      </button>
+      <button 
+        data-filter-group="category" 
+        data-filter-value="Shop" 
+        class="filter-btn px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
+      >
+        Shop
+      </button>
+      <button 
+        data-filter-group="category" 
+        data-filter-value="Table Reservations" 
+        class="filter-btn px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
+      >
+        Table Reservations
+      </button>
+    </div>
+
+    <div class="flex flex-wrap gap-2 w-full md:w-auto">
+      <select id="type-filter" class="px-4 py-2 rounded-lg text-sm border-gray-200 bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none">
+        <option value="all">All Types</option>
+        <option value="feature">Features</option>
+        <option value="fix">Fixes</option>
+        <option value="breaking">Breaking Changes</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<script>
+  const buttons = document.querySelectorAll('.filter-btn');
+  const typeSelect = document.getElementById('type-filter');
+
+  function dispatchFilter() {
+    const activeBtn = document.querySelector('.filter-btn.active');
+    const category = activeBtn?.getAttribute('data-filter-value') || 'all';
+    // @ts-ignore
+    const type = typeSelect?.value || 'all';
+
+    const event = new CustomEvent('filter-change', {
+      detail: { category, type }
+    });
+    window.dispatchEvent(event);
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      // Toggle active class
+      buttons.forEach(b => {
+        b.classList.remove('bg-gray-900', 'text-white');
+        b.classList.add('bg-gray-100', 'text-gray-600');
+        b.classList.remove('active');
+      });
+      // @ts-ignore
+      e.target.classList.remove('bg-gray-100', 'text-gray-600');
+      // @ts-ignore
+      e.target.classList.add('bg-gray-900', 'text-white');
+      // @ts-ignore
+      e.target.classList.add('active');
+      
+      dispatchFilter();
+    });
+  });
+
+  typeSelect?.addEventListener('change', dispatchFilter);
+</script>

@@ -1,0 +1,102 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ChangelogCard from '../components/ChangelogCard.astro';
+import FilterBar from '../components/FilterBar.astro';
+import { getCollection } from 'astro:content';
+
+const changelogs = await getCollection('changelogs');
+const reservations = await getCollection('table-reservations');
+const shop = await getCollection('shop');
+
+// Combine all entries
+const allEntries = [
+  ...changelogs,
+  ...reservations,
+  ...shop
+].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const latestEntries = allEntries.slice(0, 3);
+---
+
+<Layout title="Bringmal.de Changelog">
+  <div class="text-center mb-16 mt-8">
+    <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-4">
+      Product Updates
+    </h1>
+    <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+      Stay up to date with the latest features, improvements, and fixes for Bringmal.de
+    </p>
+  </div>
+
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+      <span class="w-2 h-8 bg-blue-600 rounded-full"></span>
+      Latest Highlights
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {latestEntries.map(entry => (
+        <ChangelogCard entry={entry} />
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <div class="sticky top-0 z-20 pt-4 bg-gray-50 pb-4">
+       <FilterBar />
+    </div>
+   
+    <div id="changelog-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {allEntries.map(entry => {
+        const data = entry.data;
+        // @ts-ignore
+        const category = data.category || (entry.collection === 'table-reservations' ? 'Table Reservations' : entry.collection === 'shop' ? 'Shop' : 'Other');
+        // @ts-ignore
+        const type = data.type || 'other';
+        
+        return (
+          <div 
+            class="entry-item transition-all duration-300"
+            data-category={category}
+            data-type={type}
+          >
+            <ChangelogCard entry={entry} />
+          </div>
+        );
+      })}
+    </div>
+    
+    <div id="no-results" class="hidden text-center py-12 text-gray-500">
+      No updates found matching your filters.
+    </div>
+  </section>
+</Layout>
+
+<script>
+  window.addEventListener('filter-change', ((e: CustomEvent) => {
+    const { category, type } = e.detail;
+    const items = document.querySelectorAll('.entry-item');
+    let visibleCount = 0;
+
+    items.forEach(item => {
+      const itemCategory = item.getAttribute('data-category');
+      const itemType = item.getAttribute('data-type');
+      
+      const matchesCategory = category === 'all' || itemCategory === category;
+      const matchesType = type === 'all' || itemType === type;
+
+      if (matchesCategory && matchesType) {
+        // @ts-ignore
+        item.style.display = 'block';
+        visibleCount++;
+      } else {
+         // @ts-ignore
+        item.style.display = 'none';
+      }
+    });
+
+    const noResults = document.getElementById('no-results');
+    if (noResults) {
+      noResults.classList.toggle('hidden', visibleCount > 0);
+    }
+  }) as EventListener);
+</script>
