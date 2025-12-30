@@ -1,6 +1,7 @@
 ---
 import { type CollectionEntry } from 'astro:content';
 import { format } from 'date-fns';
+import { de } from 'date-fns/locale';
 
 interface Props {
   entry: CollectionEntry<'changelogs'> | CollectionEntry<'table-reservations'> | CollectionEntry<'shop'>;
@@ -33,8 +34,16 @@ const typeColors = {
   default: 'bg-gray-100 text-gray-800'
 };
 
+const labels = {
+  feature: 'Feature',
+  fix: 'Fix',
+  breaking: 'Breaking',
+  live: 'Live',
+  planned: 'Geplant'
+};
+
 const badgeColor = isChangelog ? (typeColors[entryType as keyof typeof typeColors] || typeColors.default) : 'bg-purple-100 text-purple-800';
-const badgeText = isChangelog ? entryType : status;
+const badgeText = isChangelog ? (labels[entryType as keyof typeof labels] || entryType) : (labels[status as keyof typeof labels] || status);
 
 ---
 
@@ -47,12 +56,12 @@ const badgeText = isChangelog ? entryType : status;
         </span>
         {category && (
           <span class="bg-gray-100 text-gray-600 px-2.5 py-0.5 rounded-full text-xs font-medium">
-            {category}
+            {category === 'Table Reservations' ? 'Tischreservierungen' : category}
           </span>
         )}
       </div>
       <time datetime={date.toISOString()} class="text-sm text-gray-500 whitespace-nowrap">
-        {format(date, 'MMM d, yyyy')}
+        {format(date, 'dd. MMM yyyy', { locale: de })}
       </time>
     </div>
     
