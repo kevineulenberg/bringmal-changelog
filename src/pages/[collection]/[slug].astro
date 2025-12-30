@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import { format } from 'date-fns';
+import { de } from 'date-fns/locale';
 
 export async function getStaticPaths() {
   const changelogs = await getCollection('changelogs');
@@ -11,7 +12,7 @@ export async function getStaticPaths() {
   const allEntries = [
     ...changelogs.map(entry => ({ params: { collection: 'changelogs', slug: entry.slug }, props: { entry } })),
     ...reservations.map(entry => ({ params: { collection: 'table-reservations', slug: entry.slug }, props: { entry } })),
-    ...shop.map(entry => ({ params: { collection: 'shop', slug: entry.slug }, props: { entry } })),
+    ...shop.map(entry => ({ params: { collection: 'shop', slug: entry.slug }, props: { entry } }))
   ];
 
   return allEntries;
@@ -19,37 +20,84 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
-
 const data = entry.data;
+
+// Helper für Badges (Dupliziert aus index, idealerweise in utils.ts)
+// @ts-ignore
+const type = data.type || 'other';
+// @ts-ignore
+const status = data.status || 'live';
+const categoryRaw = data.category || (entry.collection === 'table-reservations' ? 'Table Reservations' : entry.collection === 'shop' ? 'Shop' : 'Other');
+const category = categoryRaw === 'Table Reservations' ? 'Tischreservierungen' : categoryRaw;
+
+const labels: Record<string, string> = {
+    feature: 'Feature',
+    fix: 'Fix',
+    breaking: 'Breaking',
+    live: 'Live',
+    planned: 'Geplant',
+    other: 'Update'
+};
+
+const colors: Record<string, string> = {
+    feature: 'bg-emerald-100 text-emerald-800 border-emerald-200',
+    fix: 'bg-blue-100 text-blue-800 border-blue-200',
+    breaking: 'bg-red-100 text-red-800 border-red-200',
+    live: 'bg-green-100 text-green-800 border-green-200',
+    planned: 'bg-amber-100 text-amber-800 border-amber-200',
+    default: 'bg-gray-100 text-gray-800 border-gray-200'
+};
+
+const key = 'version' in data ? type : status;
+const label = labels[key] || key;
+const color = colors[key] || colors.default;
+
 ---
 
-<Layout title={data.title}>
-  <div class="max-w-3xl mx-auto">
-    <a href="/" class="inline-flex items-center text-sm text-gray-500 hover:text-gray-900 mb-8 transition-colors">
-      ← Back to Overview
+<Layout title={`${data.title} - Bringmal Changelog`}>
+  <div class="max-w-4xl mx-auto mt-12 md:mt-20">
+    <a href="/" class="inline-flex items-center text-sm text-gray-500 hover:text-gray-900 transition-colors mb-12 group">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Zurück zur Übersicht
     </a>
 
-    <header class="mb-8">
-      <div class="flex items-center gap-3 mb-4 text-sm">
-        <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full font-medium capitalize">
-          {entry.collection.replace('-', ' ')}
-        </span>
-        <time class="text-gray-500">
-          {format(data.date, 'MMMM d, yyyy')}
+    <article class="md:flex gap-12 relative">
+      <!-- Sticky Sidebar -->
+      <aside class="md:w-[200px] flex-shrink-0 flex flex-col md:items-end md:text-right md:sticky md:top-32 self-start mb-8 md:mb-0">
+        <time datetime={data.date.toISOString()} class="text-base font-bold text-gray-900 mb-3 block">
+          {format(data.date, 'dd. MMM yyyy', { locale: de })}
         </time>
-      </div>
-
-      <h1 class="text-4xl font-bold text-gray-900 mb-4">{data.title}</h1>
-      
-      {'version' in data && (
-        <div class="inline-block bg-blue-50 text-blue-700 px-3 py-1 rounded-lg font-mono text-sm border border-blue-100">
-          v{data.version}
+        
+        <div class="flex flex-col md:items-end gap-3">
+           <span class={`px-3 py-1 rounded-full text-sm font-semibold border ${color} w-fit`}>
+            {label}
+          </span>
+          {category && (
+            <span class="text-sm text-gray-500 font-medium">
+              {category}
+            </span>
+          )}
+          {'version' in data && (
+            <span class="text-sm font-mono text-gray-400 mt-2 block">v{data.version}</span>
+          )}
         </div>
-      )}
-    </header>
+      </aside>
 
-    <article class="prose prose-lg prose-blue max-w-none bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
-      <Content />
+      <!-- Main Content -->
+      <div class="flex-grow min-w-0">
+        <header class="mb-8">
+          <h1 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight mb-6">
+            {data.title}
+          </h1>
+          <div class="h-1 w-20 bg-gray-100 rounded-full"></div>
+        </header>
+
+        <div class="prose prose-lg prose-gray max-w-none prose-img:rounded-xl prose-headings:text-gray-900 prose-a:text-blue-600 hover:prose-a:text-blue-700">
+          <Content />
+        </div>
+      </div>
     </article>
   </div>
 </Layout>

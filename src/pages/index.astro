@@ -1,75 +1,166 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ChangelogCard from '../components/ChangelogCard.astro';
 import FilterBar from '../components/FilterBar.astro';
 import { getCollection } from 'astro:content';
+import { format } from 'date-fns';
+import { de } from 'date-fns/locale';
 
+// Daten holen
 const changelogs = await getCollection('changelogs');
 const reservations = await getCollection('table-reservations');
 const shop = await getCollection('shop');
 
-// Combine all entries
+// Alle Einträge kombinieren und sortieren
 const allEntries = [
   ...changelogs,
   ...reservations,
   ...shop
 ].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-const latestEntries = allEntries.slice(0, 3);
+// Helper für Badges & Farben
+const getBadgeInfo = (entry: any) => {
+  const data = entry.data;
+  const isChangelog = 'version' in data;
+  
+  // @ts-ignore
+  const type = data.type || 'other';
+  // @ts-ignore
+  const status = data.status || 'live';
+  
+  const labels: Record<string, string> = {
+    feature: 'Feature',
+    fix: 'Fix',
+    breaking: 'Breaking',
+    live: 'Live',
+    planned: 'Geplant',
+    other: 'Update'
+  };
+
+  const colors: Record<string, string> = {
+    feature: 'bg-emerald-100 text-emerald-800 border-emerald-200',
+    fix: 'bg-blue-100 text-blue-800 border-blue-200',
+    breaking: 'bg-red-100 text-red-800 border-red-200',
+    live: 'bg-green-100 text-green-800 border-green-200',
+    planned: 'bg-amber-100 text-amber-800 border-amber-200',
+    default: 'bg-gray-100 text-gray-800 border-gray-200'
+  };
+
+  const key = isChangelog ? type : status;
+  return {
+    label: labels[key] || key,
+    color: colors[key] || colors.default
+  };
+};
+
+// Helper für Plaintext Preview (entfernt Markdown Syntax grob)
+const getPreview = (body: string) => {
+  if (!body) return '';
+  return body
+    .replace(/!\[.*?\]\(.*?\)/g, '') // Bilder entfernen
+    .replace(/\[.*?\]\(.*?\)/g, '$1') // Links bereinigen
+    .replace(/#{1,6}\s/g, '') // Headlines entfernen
+    .slice(0, 280) + (body.length > 280 ? '...' : '');
+};
+
 ---
 
 <Layout title="Bringmal.de Changelog">
-  <div class="text-center mb-16 mt-8 flex flex-col items-center">
+  <!-- Header -->
+  <div class="text-center mb-20 mt-12 flex flex-col items-center">
     <img 
       src="/images/uploads/logo.webp" 
       alt="Bringmal Logo" 
-      class="mb-8 w-full max-w-[280px] h-auto"
+      class="mb-10 w-full max-w-[180px] h-auto"
     />
-    <h1 class="text-4xl font-bold text-gray-900 mb-4">Changelog</h1>
-    <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-      Bleiben Sie auf dem Laufenden über die neuesten Funktionen, Verbesserungen und Korrekturen für Bringmal.de
+    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Changelog</h1>
+    <p class="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
+      Alle neuen Funktionen, Verbesserungen und Fixes im Überblick.
     </p>
   </div>
 
-  <section class="mb-16">
-    <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-      <span class="w-2 h-8 bg-blue-600 rounded-full"></span>
-      Neueste Highlights
-    </h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {latestEntries.map(entry => (
-        <ChangelogCard entry={entry} />
-      ))}
-    </div>
-  </section>
-
   <section>
-    <div class="sticky top-0 z-20 pt-4 bg-gray-50 pb-4">
+    <div class="sticky top-4 z-30 pb-12">
        <FilterBar />
     </div>
    
-    <div id="changelog-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div id="changelog-feed" class="flex flex-col gap-16 relative">
+      <!-- Vertikale Linie im Hintergrund (Desktop) -->
+      <div class="hidden md:block absolute left-[180px] top-0 bottom-0 w-px bg-gray-200 -z-10"></div>
+
       {allEntries.map(entry => {
         const data = entry.data;
+        const { label, color } = getBadgeInfo(entry);
         // @ts-ignore
-        const category = data.category || (entry.collection === 'table-reservations' ? 'Table Reservations' : entry.collection === 'shop' ? 'Shop' : 'Other');
+        const categoryRaw = data.category || (entry.collection === 'table-reservations' ? 'Table Reservations' : entry.collection === 'shop' ? 'Shop' : 'Other');
+        const category = categoryRaw === 'Table Reservations' ? 'Tischreservierungen' : categoryRaw;
         // @ts-ignore
-        const type = data.type || 'other';
-        
+        const filterType = data.type || 'other';
+
         return (
-          <div 
-            class="entry-item transition-all duration-300"
-            data-category={category}
-            data-type={type}
+          <article 
+            class="entry-item group md:flex gap-12"
+            data-category={categoryRaw}
+            data-type={filterType}
           >
-            <ChangelogCard entry={entry} />
-          </div>
+            <!-- Linke Spalte: Sticky Meta -->
+            <div class="md:w-[180px] flex-shrink-0 flex flex-col items-end text-right md:sticky md:top-32 self-start mb-4 md:mb-0">
+              <time datetime={data.date.toISOString()} class="text-sm font-semibold text-gray-900 mb-2 block">
+                {format(data.date, 'dd. MMM yyyy', { locale: de })}
+              </time>
+              
+              <div class="flex flex-col items-end gap-2">
+                <span class={`px-3 py-1 rounded-full text-xs font-semibold border ${color}`}>
+                  {label}
+                </span>
+                
+              </div>
+            </div>
+
+            <!-- Rechte Spalte: Content Card -->
+            <div class="flex-grow bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+              <div class="mb-4">
+                <h2 class="text-2xl font-bold text-gray-900 leading-tight group-hover:text-blue-600 transition-colors">
+                  <a href={`/${entry.collection}/${entry.slug}`}>
+                    {data.title}
+                  </a>
+                </h2>
+                {category && (
+                 
+
+                  <div class="flex flex-col items-start gap-2 mt-2"> <span class="px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-bold text-white" style="background-color: #7d7d7d"> {category} </span> </div>
+                )}
+              </div>
+
+              <!-- Content Preview -->
+              <div class="prose prose-gray prose-sm max-w-none text-gray-600 mb-6 line-clamp-3">
+                 <!-- 
+                    Wir rendern hier bewusst reinen Text oder Markdown als Vorschau. 
+                    Bei Astro Komponenten im Body müsste man entry.render() nutzen, 
+                    aber für die Liste reicht Text.
+                 -->
+                 {getPreview(entry.body)}
+              </div>
+
+              <a 
+                href={`/${entry.collection}/${entry.slug}`}
+                class="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+              >
+                Mehr erfahren
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </a>
+            </div>
+          </article>
         );
       })}
     </div>
     
-    <div id="no-results" class="hidden text-center py-12 text-gray-500">
-      Keine Updates gefunden, die Ihren Filtern entsprechen.
+    <div id="no-results" class="hidden text-center py-20">
+      <p class="text-gray-500 text-lg">Keine Updates gefunden, die Ihren Filtern entsprechen.</p>
+      <button onclick="window.dispatchEvent(new CustomEvent('filter-reset'))" class="mt-4 text-blue-600 hover:underline">
+        Filter zurücksetzen
+      </button>
     </div>
   </section>
 </Layout>
@@ -88,9 +179,10 @@ const latestEntries = allEntries.slice(0, 3);
       const matchesCategory = category === 'all' || itemCategory === category;
       const matchesType = type === 'all' || itemType === type;
 
+      // @ts-ignore
       if (matchesCategory && matchesType) {
         // @ts-ignore
-        item.style.display = 'block';
+        item.style.display = 'flex'; // Wichtig: flex für das Layout
         visibleCount++;
       } else {
          // @ts-ignore
@@ -99,16 +191,21 @@ const latestEntries = allEntries.slice(0, 3);
     });
 
     const noResults = document.getElementById('no-results');
-    if (noResults) {
-      noResults.classList.toggle('hidden', visibleCount > 0);
+    const feed = document.getElementById('changelog-feed');
+    
+    if (noResults && feed) {
+      if (visibleCount > 0) {
+        noResults.classList.add('hidden');
+        feed.classList.remove('hidden');
+      } else {
+        noResults.classList.remove('hidden');
+        feed.classList.add('hidden');
+      }
     }
   }
 
   document.addEventListener('astro:page-load', () => {
-    // Only attach if we are on the page with the grid (though this script might only load on this page)
-    if (document.getElementById('changelog-grid')) {
-      window.removeEventListener('filter-change', handleFilterChange);
-      window.addEventListener('filter-change', handleFilterChange);
-    }
+    window.removeEventListener('filter-change', handleFilterChange);
+    window.addEventListener('filter-change', handleFilterChange);
   });
 </script>
