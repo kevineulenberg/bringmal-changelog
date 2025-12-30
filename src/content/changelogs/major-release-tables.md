@@ -6,13 +6,29 @@ type: feature
 category: Table Reservations
 ---
 
-![Vorschau Tischreservierung 1](/images/uploads/table-screen-1.webp)
+![Vorschau Tischreservierung 1](/images/uploads/major-release-2-0-tables/table-screen-1.webp)
 
 Mit Version 2.0 erhält das Modul ein umfassendes Upgrade. Der Fokus liegt auf deutlich besserer User Experience, moderner Oberfläche, spürbarer Performance und vielen neuen Erweiterungsfunktionen. Viele ältere Bereiche wurden vollständig erneuert, damit die tägliche Arbeit im Restaurant schneller, übersichtlicher und zuverlässiger wird.
 
 ---
 
 ## Highlights in 2.0
+
+## Neue Statistiken und Insights
+
+Die Statistikseite ist ab sofort verfügbar. Erfahre alles über das Verhalten deiner Reservierungen.
+
+* Reservierungstrends
+* No Shows und Stornierungen
+* Bestätigungsquoten
+* Online versus Telefonreservierungen
+* Top 30 Gäste
+* Umfassende Planungsgrundlage
+
+![Vorschau Tischreservierung 2](/images/uploads/major-release-2-0-tables/stats.webp)
+
+
+---
 
 ### Neues Schnell Check In für Gäste und Walk Ins
 
@@ -23,6 +39,8 @@ Das neue Walk In und Check In Interface kann bereits vollständig als Ersatz fü
 * Walk Ins mit nur einem Klick anlegen, ohne das bisherige Interface mit mehreren Schritten zu öffnen
 * Reduziert auf die wichtigsten Felder für schnelles Arbeiten im laufenden Betrieb
 * Gleichzeitig geeignet für geplante, detaillierte Reservierungen
+
+![Vorschau Tischreservierung 2](/images/uploads/major-release-2-0-tables/walkin.webp)
 
 ### Integrierte Gästedatenbank mit automatischer Erkennung
 
@@ -35,7 +53,9 @@ Für wiederkehrende Gäste wird der Reservierungsprozess deutlich schneller.
 * Vorname und Nachname werden direkt vorbefüllt
 * Optimal für Stammgäste und schnellen Telefonservice
 
-### Schnelles Auschecken für realistische Tischfreigaben
+![Vorschau Tischreservierung 2](/images/uploads/major-release-2-0-tables/phone-checkin.webp)
+
+### Schnelles Auschecken für schnelle Tischfreigaben
 
 Wenn Gäste früher gehen, wird der Tisch nun sofort wieder verfügbar.
 
@@ -44,6 +64,8 @@ Wenn Gäste früher gehen, wird der Tisch nun sofort wieder verfügbar.
 * Direktes Auschecken über den Status bei angekommenen Gästen
 * Keine unnötige Blockierung bis zur Standardzeit
 * Ideal für kurze Aufenthalte und bessere Auslastung
+
+![Vorschau Tischreservierung 2](/images/uploads/major-release-2-0-tables/checkout.webp)
 
 ---
 
@@ -55,20 +77,25 @@ Die Tischzuweisung wurde vollständig überarbeitet und unterstützt aktiv bei d
 
 **Funktionen**
 
-* Automatische Empfehlung der besten Tische
+* Automatische Empfehlung der besten Tische inkl. Vorauswahlen
 * Berücksichtigung von Gruppengröße und Kombinationen
 * Anzeige der voraussichtlichen Verfügbarkeit
-* Unterstützung bei stressigen Stoßzeiten
+* Unterstützung bei stressigen Stoßzeiten für den besten Überblick
+
+![Vorschau Tischreservierung 2](/images/uploads/major-release-2-0-tables/tables.webp)
 
 ### Reinigungs Puffer zwischen Reservierungen
 
 Für eng getaktete Tage kann ein Puffer zwischen Reservierungen gesetzt werden.
+Dieser Puffer wird intelligent berücksichtigt wenn bei starker Auslastung der gleiche Tisch in aufeinander folgenden Reservierungen vorkommt.
 
 **Vorteile**
 
 * Standard 15 Minuten, frei konfigurierbar
 * Sauberere Abläufe
 * Weniger Zeitdruck für das Team
+
+![Vorschau Tischreservierung 2](/images/uploads/major-release-2-0-tables/buffer.webp)
 
 ### Neue Time-Line Tisch Ansicht
 
@@ -80,7 +107,7 @@ Eine komplett neue visuelle Planungsansicht.
 * Zeitstrahl aller kommenden Reservierungen
 * Schnelle Entscheidungen bei hoher Auslastung
 
-![Vorschau Tischreservierung 2](/images/uploads/table-screen-2.webp)
+![Vorschau Tischreservierung 2](/images/uploads/major-release-2-0-tables/table-screen-2.webp)
 
 
 ### Verbesserte Auslastungs Warnungen
@@ -88,14 +115,16 @@ Eine komplett neue visuelle Planungsansicht.
 Stoßzeiten werden klarer und früher erkannt.
 
 * Gruppierte Anzeige mehrerer Spitzenzeiten
-* Zusätzliche Detailinformationen für bessere Planung
+* Zusätzliche Detailinformationen und übersichtlichere Darstellung für bessere Planung
+
+![Vorschau Tischreservierung 2](/images/uploads/major-release-2-0-tables/warnings.webp)
 
 ### Übersichtliche Reservierungslisten
 
-Die Darstellung bleibt auch an langen Tagen übersichtlich.
+Die Darstellung bleibt auch an langen Tagen übersichtlich. Klare Trennung in Inbox und Tagesansicht. Ältere Reservierungen werden in der Inbox nun ausgeblendet und ausstehende übefällige Reservierungen die nicht bestätigt wurden, werden automatisch gelöscht.
 
 * Stornierte Reservierungen ausblendbar
-* Vergangene Reservierungen nach vier Stunden automatisch ausgeblendet
+* Vergangene Reservierungen nach vier Stunden automatisch ausgeblendet (neuer Filter)
 
 ---
 
@@ -105,18 +134,23 @@ Die Darstellung bleibt auch an langen Tagen übersichtlich.
 
 Unterschiedliche Gruppen erhalten passende Zeitfenster.
 
-* Kleine Gruppen kürzere Blockdauer
+* Kleine Gruppen kürzere Blockdauer: Tische werden früher wieder verfügbar
 * Große Gruppen längere Aufenthaltszeit
-* Manuell jederzeit anpassbar
-* Optional aktivierbar in den Einstellungen
+* Optional aktivierbar und konfigurierbarin den Einstellungen
+* Restaurant Personal kann bei manuellen Check-Ins die Blockdauer manuell anpassen
 
-### Flexible Tages und Stundenblockierung
+![Vorschau Tischreservierung 2](/images/uploads/major-release-2-0-tables/flex-groups.webp)
+
+### Reservierungen können nun flexibel blockiert werden
 
 Blockierungen lassen sich nun deutlich genauer steuern.
 
 * Ganze Tage blockieren
 * Halbe Tage blockieren
 * Bestimmte Zeitfenster gezielt sperren
+
+![Vorschau Tischreservierung 2](/images/uploads/major-release-2-0-tables/flex-blocking.webp)
+
 
 ---
 
@@ -125,17 +159,18 @@ Blockierungen lassen sich nun deutlich genauer steuern.
 ### Überarbeitete iFrame Einbettung
 
 Das Reservierungs Widget funktioniert jetzt auf nahezu jeder Website zuverlässig.
+Einfach nur den iFame Widget Code aus "Einstellungen > Links > Embed-Code (Neu)" in die gewünschte Webseite einfügen und schon können Gäste online reservieren.
+
+![Vorschau Tischreservierung 2](/images/uploads/major-release-2-0-tables/iframe.webp)
 
 ### Neues Kunden Reservierungsformular
 
-* Modernes Design
-* Bessere Verständlichkeit
+* Modernes Design und Animationen
+* Bessere Benutzerfreundlichkeit
 * Schnellere Buchung für Gäste
 
-### Verbesserte Erinnerungs E Mails
+![Vorschau Tischreservierung 2](/images/uploads/major-release-2-0-tables/form.webp)
 
-* Zuverlässigere Zustellung
-* Einheitliches Versand Timing
 
 ---
 
@@ -151,32 +186,35 @@ Ist alles belegt, zeigt das System sofort an, ab wann wieder Tische frei werden.
 
 ### Stabilere Buchungen bei hoher Nachfrage
 
-* Deutlich weniger doppelte Tischvergaben
+* Nie wieder doppelte Tischvergaben (Bugfix)
 * Sauberes Fehlerverhalten bei parallelen Buchungen
 * Mehr Planungssicherheit an Feiertagen und Stoßzeiten
 
 ---
 
-## Neue Statistiken und Insights
+## Mobile Experience
 
-Die Statistikseite wurde vollständig erneuert.
+Die gesamte Anwendung für die Reservierungsverwaltung auf Smartphones wurde optimiert.
 
-* Reservierungstrends
-* No Shows und Stornierungen
-* Bestätigungsquoten
-* Online versus Telefonreservierungen
-* Top 30 Gäste
-* Umfassende Planungsgrundlage
+* Bessere Darstellung auf Smartphones (iOS & Android)
+* Komfortable Bedienung unterwegs
+* Schnelle Aktionen jederzeit möglich, auch ohne Tablet
+
+![Vorschau Tischreservierung 2](/images/uploads/major-release-2-0-tables/mobile.webp)
+
 
 ---
 
-## Mobile Experience
+### Live Daten zu aktuellen Gästen im Restaurant
 
-Die gesamte Anwendung wurde für mobile Nutzung optimiert.
+Mit Version 2.0 erhältst du erstmals echte Live Einblicke in das aktuelle Geschehen in deinem Restaurant.
 
-* Bessere Darstellung auf Smartphones
-* Komfortable Bedienung unterwegs
-* Schnelle Aktionen jederzeit möglich
+Du siehst jederzeit, wie viele Gäste sich aktuell im Restaurant befinden. Diese Information wird sowohl in der neuen Timeline Ansicht als auch in der Tageslistenansicht über die blauen pulsierenden Markierungen sichtbar dargestellt. So erkennst du auf einen Blick, welche Reservierungen gerade aktiv sind, welche Tische belegt sind und wie sich die Auslastung im laufenden Betrieb entwickelt.
+
+Das erleichtert spontane Entscheidungen, verbessert die Koordination im Team und gibt dir deutlich mehr Kontrolle über den aktuellen Betrieb, besonders in Stoßzeiten.
+
+![Vorschau Tischreservierung 2](/images/uploads/major-release-2-0-tables/live-1.webp)
+![Vorschau Tischreservierung 2](/images/uploads/major-release-2-0-tables/live-2.webp)
 
 ---
 
@@ -184,7 +222,7 @@ Die gesamte Anwendung wurde für mobile Nutzung optimiert.
 
 ### Neues Backup System in der Bringmal Cloud
 
-Ab sofort werden alle Daten täglich verschlüsselt gesichert.
+Ab sofort werden deine Reservierungsdaten täglich automatisch gesichert und über einen längeren Zeitraum als zuvor.
 
 **Neu**
 
