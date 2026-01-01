@@ -119,6 +119,18 @@ Stoßzeiten werden klarer und früher erkannt.
 
 ![Vorschau Tischreservierung 2](/images/uploads/major-release-2-0-tables/warnings.webp)
 
+
+## Direkte Kundenkommunikation (Messages)
+
+Mit der neuen Message Funktion kannst du jetzt direkt mit deinen Gästen kommunizieren, ohne selbst E Mails verfassen zu müssen oder einen externen E Mail Client zu öffnen.
+
+• Nachrichten direkt aus der Reservierung heraus senden (werden per Email zugestellt)
+• Antworten auf bestehende Reservierungen oder bei No Shows möglich  
+• Zentrale Kommunikation an einem Ort  
+• Verfügbar über den Kontakt Button in der Reservierungsübersicht
+
+![Vorschau Tischreservierung 2](/images/uploads/major-release-2-0-tables/messages.webp)
+
 ### Übersichtliche Reservierungslisten
 
 Die Darstellung bleibt auch an langen Tagen übersichtlich. Klare Trennung in Inbox und Tagesansicht. Ältere Reservierungen werden in der Inbox nun ausgeblendet und ausstehende übefällige Reservierungen die nicht bestätigt wurden, werden automatisch gelöscht.
