@@ -59,6 +59,7 @@ const getPreview = (body: string) => {
     .replace(/!\[.*?\]\(.*?\)/g, '') // Bilder entfernen
     .replace(/\[.*?\]\(.*?\)/g, '$1') // Links bereinigen
     .replace(/#{1,6}\s/g, '') // Headlines entfernen
+    .replace(/<[^>]*>/g, '') // HTML-Tags entfernen
     .slice(0, 280) + (body.length > 280 ? '...' : '');
 };
 
