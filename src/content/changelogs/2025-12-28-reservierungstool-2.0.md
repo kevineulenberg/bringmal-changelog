@@ -1,14 +1,18 @@
 ---
 title: Bringmal Tischreservierungen 2.0
 version: "2.0"
-date: 2025-12-30T20:25:00.000+07:00
+date: 2026-01-05T20:25:00.000+07:00
 type: feature
 category: Table Reservations
 ---
 
 ![Vorschau Tischreservierung 1](/images/uploads/major-release-2-0-tables/table-screen-1.webp)
 
-Mit Version 2.0 erhält das Modul ein umfassendes Upgrade. Der Fokus liegt auf deutlich besserer User Experience, moderner Oberfläche, spürbarer Performance und vielen neuen Erweiterungsfunktionen. Viele ältere Bereiche wurden vollständig erneuert, damit die tägliche Arbeit im Restaurant schneller, übersichtlicher und zuverlässiger wird.
+Mit <strong>Version 2.0</strong> erhält das Tischreservierungs-Modul ein umfassendes Upgrade. Der Fokus liegt auf deutlich besserer User Experience, moderner Oberfläche, spürbarer Performance und vielen neuen Erweiterungsfunktionen. Viele ältere Bereiche wurden vollständig erneuert, damit die tägliche Arbeit im Restaurant schneller, übersichtlicher und zuverlässiger wird.
+
+Die neue Version wird ab dem <strong>05.01.2026</strong> offiziell für die ersten Bringmal Kund:innen veröffentlicht, Welle 2 folgt ab dem <strong>16.01.2026</strong>.
+
+Reseller Partner und Whitelabel Kunden erhalten die neue Version spätestens ab dem <strong>20.01.2026</strong>.
 
 ---
 
@@ -36,11 +40,13 @@ Das neue Walk In und Check In Interface kann bereits vollständig als Ersatz fü
 
 **Was sich verbessert**
 
+* Intelligenter Tischassistent: Finde jederzeit den idealen Tisch und entdecke passende Alternativen
 * Walk Ins mit nur einem Klick anlegen, ohne das bisherige Interface mit mehreren Schritten zu öffnen
 * Reduziert auf die wichtigsten Felder für schnelles Arbeiten im laufenden Betrieb
 * Gleichzeitig geeignet für geplante, detaillierte Reservierungen
 
 ![Vorschau Tischreservierung 2](/images/uploads/major-release-2-0-tables/walkin.webp)
+![Vorschau Tischreservierung 2](/images/uploads/major-release-2-0-tables/assistent.webp)
 
 ### Integrierte Gästedatenbank mit automatischer Erkennung
 
@@ -171,7 +177,7 @@ Blockierungen lassen sich nun deutlich genauer steuern.
 ### Überarbeitete iFrame Einbettung
 
 Das Reservierungs Widget funktioniert jetzt auf nahezu jeder Website zuverlässig.
-Einfach nur den iFame Widget Code aus "Einstellungen > Links > Embed-Code (Neu)" in die gewünschte Webseite einfügen und schon können Gäste online reservieren.
+Einfach nur den iFame Widget Code aus "Einstellungen > Links > Embed-Code (Neu)" in die gewünschte Webseite einfügen und schon können Gäste online reservieren. Nun kann das Widget z.B. in jede WordPress oder Wixx Website nahtlos mit zwei Klicks integriert werden.
 
 ![Vorschau Tischreservierung 2](/images/uploads/major-release-2-0-tables/iframe.webp)
 
