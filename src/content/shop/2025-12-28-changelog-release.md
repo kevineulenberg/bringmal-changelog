@@ -11,7 +11,7 @@ Künftig findest du dort alle Produktneuheiten, Verbesserungen und geplanten Bet
 
 Bleib immer auf dem Laufenden mit unserem RSS-Feed! Abonniere den Feed in deinem bevorzugten RSS-Reader und erhalte automatisch Benachrichtigungen über neue Features, Verbesserungen und geplante Releases.
 
-**RSS-Feed URL:** [https://changelog.bringmal.de/rss.xml](https://changelog.bringmal.de/rss.xml)
+**RSS-Feed URL:** [https://changelog.bringmal.app/rss.xml](https://changelog.bringmal.app/rss.xml)
 
 ### Vorteile des RSS-Feeds
 
