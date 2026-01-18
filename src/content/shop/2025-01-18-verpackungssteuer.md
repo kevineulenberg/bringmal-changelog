@@ -1,10 +1,10 @@
 ---
-title: Verpackungssteuer-Modul für Freiburger Restaurants
+title: Verpackungssteuer-Modul für Restaurants in Konstanz, Freiburg und Tübingen
 date: 2026-01-18
 status: live
 ---
 
-Seit dem 1. Januar 2025 gilt in Freiburg die neue kommunale Verpackungssteuer. Für alle Restaurants, die über Bringmal Bestellungen zur Abholung anbieten, haben wir ein neues Modul entwickelt, das die Steuer automatisch berechnet und transparent im Checkout anzeigt.
+Seit dem 1. Januar 2025 gilt in Konstanz, Freiburg und Tübingen die neue kommunale Verpackungssteuer. Für alle Restaurants, die über Bringmal Bestellungen zur Abholung anbieten, haben wir ein neues Modul entwickelt, das die Steuer automatisch berechnet und transparent im Checkout anzeigt.
 
 ---
 
