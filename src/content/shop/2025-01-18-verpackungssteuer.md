@@ -88,12 +88,13 @@ Nicht alle Produkte unterliegen der Verpackungssteuer. Du kannst flexibel festle
 
 Das Verpackungssteuer-Modul ist bereits in deinem Shop verfügbar. Die Einrichtung dauert nur wenige Minuten.
 
-**So aktivierst du das Modul**
+**So aktivierst du das Modul (aktuell nur für Freiburger Shops) **
 
-* Gehe zu WooCommerce → Einstellungen → Verpackungssteuer
+* Gehe zu Übersicht → Verpackungssteuer
 * Aktiviere das Modul
 * Wähle deinen bevorzugten Modus
-* Lege den Steuerbetrag pro Artikel fest (Standard: 0,50 €)
+* Lege den gewünschten Modus aus und dann z.b. Steuerbetrag pro Artikel fest (Standard: 0,50 €)
 * Optional: Aktiviere die "Eigenes Behältnis"-Option
+* Du möchtest das Modul auch für deinen Shop aktivieren? Kontaktiere uns gerne via hallo@bringmal.de
 
 Bei Fragen zur Einrichtung hilft dir unser Support-Team gerne weiter.

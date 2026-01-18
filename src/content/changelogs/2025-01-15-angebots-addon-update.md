@@ -128,4 +128,6 @@ Jeder Deal hat jetzt einen eigenen An/Aus-Schalter. So kannst du Angebote vorber
 * **Konflikt-Erkennung** – Automatische Warnung bei überlappenden Deals
 * **Verbesserte Preisberechnung** – Zuverlässige Preise in allen Bereichen
 
-Das Update ist ab sofort verfügbar. Bei Fragen zur Einrichtung hilft dir unser Support-Team gerne weiter.
+## Verfügbarkeit
+
+Das Update ist ab sofort verfügbar für ausgwählte Shops. Falls du es heute schon aktivieren möchtest kontaktiere uns bitte per E Mail oder im Support Chat. Bei Fragen zur Einrichtung hilft dir unser Team gerne weiter. Business Partner Kund*innen erhalten das neue Update ab dem 29. Januar 2026.
