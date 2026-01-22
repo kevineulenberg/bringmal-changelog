@@ -9,69 +9,7 @@
     <title>Sveltia CMS</title>
   </head>
   <body>
-    <!-- Script for Sveltia CMS -->
-    <script is:inline>
-      window.CMS_MANUAL_INIT = true;
-    </script>
+    <!-- Sveltia CMS will auto-init using /admin/config.yml -->
     <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
-    <script is:inline>
-      const CMS = window.CMS;
-      CMS.init({
-        config: {
-          backend: {
-            name: 'github',
-            repo: 'kevineulenberg/bringmal-changelog',
-            branch: 'main',
-            base_url: 'https://changelog.bringmal.app',
-            auth_endpoint: 'oauth'
-          },
-          media_folder: "public/images/uploads",
-          public_folder: "/images/uploads",
-          collections: [
-            {
-              name: "changelogs",
-              label: "Changelogs",
-              folder: "src/content/changelogs",
-              create: true,
-              slug: "{{slug}}",
-              fields: [
-                { label: "Title", name: "title", widget: "string" },
-                { label: "Version", name: "version", widget: "string" },
-                { label: "Date", name: "date", widget: "datetime" },
-                { label: "Type", name: "type", widget: "select", options: ["feature", "fix", "breaking"] },
-                { label: "Category", name: "category", widget: "select", options: ["Table Reservations", "Shop"] },
-                { label: "Body", name: "body", widget: "markdown" }
-              ]
-            },
-            {
-              name: "table-reservations",
-              label: "Table Reservations",
-              folder: "src/content/table-reservations",
-              create: true,
-              slug: "{{slug}}",
-              fields: [
-                { label: "Title", name: "title", widget: "string" },
-                { label: "Date", name: "date", widget: "datetime" },
-                { label: "Status", name: "status", widget: "select", options: ["live", "planned"] },
-                { label: "Body", name: "body", widget: "markdown" }
-              ]
-            },
-            {
-              name: "shop",
-              label: "Shop",
-              folder: "src/content/shop",
-              create: true,
-              slug: "{{slug}}",
-              fields: [
-                { label: "Title", name: "title", widget: "string" },
-                { label: "Date", name: "date", widget: "datetime" },
-                { label: "Status", name: "status", widget: "select", options: ["live", "planned"] },
-                { label: "Body", name: "body", widget: "markdown" }
-              ]
-            }
-          ]
-        }
-      });
-    </script>
   </body>
 </html>
