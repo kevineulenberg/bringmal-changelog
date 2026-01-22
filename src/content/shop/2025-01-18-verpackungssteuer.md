@@ -96,6 +96,6 @@ Das Verpackungssteuer-Modul ist bereits in deinem Shop verfügbar. Die Einrichtu
 * Wähle deinen bevorzugten Modus
 * Lege den gewünschten Modus aus und dann z.b. Steuerbetrag pro Artikel fest (Standard: 0,50 €)
 * Optional: Aktiviere die "Eigenes Behältnis"-Option
-* Du möchtest das Modul auch für deinen Shop aktivieren? Kontaktiere uns gerne via hallo@bringmal.de
+* Du möchtest das Modul auch für deinen Shop aktivieren? Kontaktiere uns gerne via hallo@bringmal.app
 
 Bei Fragen zur Einrichtung hilft dir unser Support-Team gerne weiter.

@@ -4,7 +4,7 @@ export default {
 	theme: {
 		extend: {
       colors: {
-        // You can customize Bringmal.de colors here if known, sticking to a neutral modern palette for now
+        // You can customize Bringmal.app colors here if known, sticking to a neutral modern palette for now
         gray: {
           900: '#111827',
           800: '#1f2937',

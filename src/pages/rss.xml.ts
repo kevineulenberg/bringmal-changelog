@@ -34,7 +34,7 @@ export async function GET(context: APIContext) {
   return rss({
     title: 'Bringmal Changelog',
     description: 'Alle Produktneuheiten, Verbesserungen und geplanten Beta Releases für Bringmal.de Produkte',
-    site: context.site || 'https://changelog.bringmal.de',
+    site: context.site || 'https://changelog.bringmal.app',
     items: allEntries.map((entry: any) => {
       const data = entry.data;
       const typeLabel = typeLabels[data.type] || data.type;

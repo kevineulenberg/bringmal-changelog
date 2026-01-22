@@ -1,4 +1,4 @@
-# Bringmal.de Changelog CMS
+# Bringmal.app Changelog CMS
 
 A modern, minimalist changelog CMS built with Astro, Decap CMS, and Tailwind CSS.
 

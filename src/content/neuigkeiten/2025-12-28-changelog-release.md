@@ -5,7 +5,7 @@ type: announcement
 draft: false
 ---
 
-Seit dem 28.12.2025 ist der offizielle Changelog für unsere Bringmal.de Produkte live. Dazu zählen unter anderem Tischreservierungen, Apps, Addons und Shop-Funktionen.
+Seit dem 28.12.2025 ist der offizielle Changelog für unsere Bringmal.app Produkte live. Dazu zählen unter anderem Tischreservierungen, Apps, Addons und Shop-Funktionen.
 Künftig findest du dort alle Produktneuheiten, Verbesserungen und geplanten Beta Releases auf einen Blick.
 
 ## RSS-Feed für automatische Updates

@@ -1,5 +1,4 @@
-
-Create a complete, minimalist yet modern changelog CMS using Astro JS and Decap CMS for my software "Bringmal.de". Deploy everything to Vercel with automatic rebuilds on new Decap CMS publishes.
+Create a complete, minimalist yet modern changelog CMS using Astro JS and Decap CMS for my software "Bringmal.app". Deploy everything to Vercel with automatic rebuilds on new Decap CMS publishes.
 
 ## Project Requirements
 
@@ -27,7 +26,7 @@ Create a complete, minimalist yet modern changelog CMS using Astro JS and Decap 
 **Frontend Structure:**
 ```
 - Homepage (/): 
-  - Hero section with "Bringmal.de Changelog"
+  - Hero section with "Bringmal.app Changelog"
   - Filterable changelog feed (all entries from all collections)
   - Filters: Category (Table Reservations/Shop/All), Type (feature/fix/breaking), Date range
   - Modern card layout with Tailwind (dark mode support)
