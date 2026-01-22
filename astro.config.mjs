@@ -11,5 +11,5 @@ export default defineConfig({
       enabled: true,
     },
   }),
-  integrations: [tailwind(), decapCmsOauth()],
+  integrations: [tailwind(), decapCmsOauth({ adminDisabled: true })],
 });
