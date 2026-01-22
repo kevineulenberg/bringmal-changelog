@@ -8,6 +8,7 @@ const changelogs = defineCollection({
     date: z.date(),
     type: z.enum(['feature', 'fix', 'breaking']),
     category: z.enum(['Table Reservations', 'Shop']),
+    draft: z.boolean().default(false),
   }),
 });
 
@@ -17,6 +18,7 @@ const tableReservations = defineCollection({
     title: z.string(),
     date: z.date(),
     status: z.enum(['live', 'planned']),
+    draft: z.boolean().default(false),
   }),
 });
 
@@ -26,6 +28,7 @@ const shop = defineCollection({
     title: z.string(),
     date: z.date(),
     status: z.enum(['live', 'planned']),
+    draft: z.boolean().default(false),
   }),
 });
 

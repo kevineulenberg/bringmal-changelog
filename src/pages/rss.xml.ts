@@ -3,10 +3,10 @@ import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
 
 export async function GET(context: APIContext) {
-  // Alle Collections laden
-  const changelogs = await getCollection('changelogs');
-  const reservations = await getCollection('table-reservations');
-  const shop = await getCollection('shop');
+  // Alle Collections laden (Drafts ausfiltern)
+  const changelogs = await getCollection('changelogs', ({ data }) => data.draft !== true);
+  const reservations = await getCollection('table-reservations', ({ data }) => data.draft !== true);
+  const shop = await getCollection('shop', ({ data }) => data.draft !== true);
 
   // Alle Einträge kombinieren und sortieren
   const allEntries = [

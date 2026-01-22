@@ -5,10 +5,10 @@ import { getCollection } from 'astro:content';
 import { format } from 'date-fns';
 import { de } from 'date-fns/locale';
 
-// Daten holen
-const changelogs = await getCollection('changelogs');
-const reservations = await getCollection('table-reservations');
-const shop = await getCollection('shop');
+// Daten holen (Drafts ausfiltern)
+const changelogs = await getCollection('changelogs', ({ data }) => data.draft !== true);
+const reservations = await getCollection('table-reservations', ({ data }) => data.draft !== true);
+const shop = await getCollection('shop', ({ data }) => data.draft !== true);
 
 // Alle Einträge kombinieren und sortieren
 const allEntries = [

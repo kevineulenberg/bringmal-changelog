@@ -1,5 +1,8 @@
 # yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
 
+logo:
+  src: /images/uploads/logo.png
+
 backend:
   name: github
   repo: kevineulenberg/bringmal-changelog
@@ -22,6 +25,7 @@ collections:
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Type", name: "type", widget: "select", options: ["feature", "fix", "breaking"] }
       - { label: "Category", name: "category", widget: "select", options: ["Table Reservations", "Shop"] }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false, hint: "Entwurf - wird nicht öffentlich angezeigt" }
       - { label: "Body", name: "body", widget: "markdown" }
 
   - name: "table-reservations"
@@ -33,6 +37,7 @@ collections:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Status", name: "status", widget: "select", options: ["live", "planned"] }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false, hint: "Entwurf - wird nicht öffentlich angezeigt" }
       - { label: "Body", name: "body", widget: "markdown" }
 
   - name: "shop"
@@ -44,4 +49,5 @@ collections:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Status", name: "status", widget: "select", options: ["live", "planned"] }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false, hint: "Entwurf - wird nicht öffentlich angezeigt" }
       - { label: "Body", name: "body", widget: "markdown" }

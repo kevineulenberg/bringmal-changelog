@@ -5,9 +5,9 @@ import { format } from 'date-fns';
 import { de } from 'date-fns/locale';
 
 export async function getStaticPaths() {
-  const changelogs = await getCollection('changelogs');
-  const reservations = await getCollection('table-reservations');
-  const shop = await getCollection('shop');
+  const changelogs = await getCollection('changelogs', ({ data }) => data.draft !== true);
+  const reservations = await getCollection('table-reservations', ({ data }) => data.draft !== true);
+  const shop = await getCollection('shop', ({ data }) => data.draft !== true);
 
   const allEntries = [
     ...changelogs.map(entry => ({ params: { collection: 'changelogs', slug: entry.slug }, props: { entry } })),
