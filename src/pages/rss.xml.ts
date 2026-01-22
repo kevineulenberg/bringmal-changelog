@@ -4,58 +4,45 @@ import type { APIContext } from 'astro';
 
 export async function GET(context: APIContext) {
   // Alle Collections laden (Drafts ausfiltern)
-  const changelogs = await getCollection('changelogs', ({ data }) => data.draft !== true);
-  const reservations = await getCollection('table-reservations', ({ data }) => data.draft !== true);
   const shop = await getCollection('shop', ({ data }) => data.draft !== true);
+  const tischreservierungen = await getCollection('tischreservierungen', ({ data }) => data.draft !== true);
+  const app = await getCollection('app', ({ data }) => data.draft !== true);
+  const neuigkeiten = await getCollection('neuigkeiten', ({ data }) => data.draft !== true);
 
   // Alle Einträge kombinieren und sortieren
   const allEntries = [
-    ...changelogs,
-    ...reservations,
-    ...shop
+    ...shop,
+    ...tischreservierungen,
+    ...app,
+    ...neuigkeiten
   ].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+  const typeLabels: Record<string, string> = {
+    feature: 'Feature',
+    fix: 'Fix',
+    improvement: 'Verbesserung',
+    announcement: 'Ankündigung'
+  };
+
+  const productLabels: Record<string, string> = {
+    shop: 'Shop',
+    tischreservierungen: 'Tischreservierungen',
+    app: 'App',
+    neuigkeiten: 'Neuigkeiten'
+  };
 
   return rss({
     title: 'Bringmal Changelog',
     description: 'Alle Produktneuheiten, Verbesserungen und geplanten Beta Releases für Bringmal.de Produkte',
     site: context.site || 'https://changelog.bringmal.de',
-    items: allEntries.map((entry) => {
+    items: allEntries.map((entry: any) => {
       const data = entry.data;
-      const isChangelog = 'version' in data;
-      
-      // Kategorie und Typ bestimmen
-      let category = '';
-      if ('category' in data && data.category) {
-        category = data.category === 'Table Reservations' ? 'Tischreservierungen' : data.category;
-      }
-      
-      let typeLabel = '';
-      if (isChangelog) {
-        const type = 'type' in data ? data.type : 'other';
-        const labels: Record<string, string> = {
-          feature: 'Feature',
-          fix: 'Fix',
-          breaking: 'Breaking Change'
-        };
-        typeLabel = labels[type] || type;
-      } else {
-        const status = 'status' in data ? data.status : 'live';
-        const labels: Record<string, string> = {
-          live: 'Live',
-          planned: 'Geplant'
-        };
-        typeLabel = labels[status] || status;
-      }
+      const typeLabel = typeLabels[data.type] || data.type;
+      const productLabel = productLabels[entry.collection] || entry.collection;
 
       // Beschreibung mit Metadaten
-      let description = '';
-      if (typeLabel) {
-        description += `[${typeLabel}]`;
-      }
-      if (category) {
-        description += ` [${category}]`;
-      }
-      if ('version' in data && data.version) {
+      let description = `[${typeLabel}] [${productLabel}]`;
+      if (data.version) {
         description += ` Version ${data.version}`;
       }
       description += '\n\n';
@@ -79,7 +66,7 @@ export async function GET(context: APIContext) {
         pubDate: data.date,
         description: description,
         link: `/${entry.collection}/${entry.slug}/`,
-        categories: category ? [category] : undefined,
+        categories: [productLabel],
       };
     }),
     customData: `<language>de-DE</language>`,

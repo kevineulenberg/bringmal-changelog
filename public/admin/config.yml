@@ -14,40 +14,54 @@ media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
 collections:
-  - name: "changelogs"
-    label: "Changelogs"
-    folder: "src/content/changelogs"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Version", name: "version", widget: "string" }
-      - { label: "Date", name: "date", widget: "datetime" }
-      - { label: "Type", name: "type", widget: "select", options: ["feature", "fix", "breaking"] }
-      - { label: "Category", name: "category", widget: "select", options: ["Table Reservations", "Shop"] }
-      - { label: "Draft", name: "draft", widget: "boolean", default: false, hint: "Entwurf - wird nicht öffentlich angezeigt" }
-      - { label: "Body", name: "body", widget: "markdown" }
-
-  - name: "table-reservations"
-    label: "Table Reservations"
-    folder: "src/content/table-reservations"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Date", name: "date", widget: "datetime" }
-      - { label: "Status", name: "status", widget: "select", options: ["live", "planned"] }
-      - { label: "Draft", name: "draft", widget: "boolean", default: false, hint: "Entwurf - wird nicht öffentlich angezeigt" }
-      - { label: "Body", name: "body", widget: "markdown" }
-
   - name: "shop"
     label: "Shop"
     folder: "src/content/shop"
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Date", name: "date", widget: "datetime" }
-      - { label: "Status", name: "status", widget: "select", options: ["live", "planned"] }
-      - { label: "Draft", name: "draft", widget: "boolean", default: false, hint: "Entwurf - wird nicht öffentlich angezeigt" }
-      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Datum", name: "date", widget: "datetime" }
+      - { label: "Typ", name: "type", widget: "select", options: ["feature", "fix", "improvement", "announcement"], default: "feature" }
+      - { label: "Version", name: "version", widget: "string", required: false, hint: "Optional, z.B. 2.0" }
+      - { label: "Entwurf", name: "draft", widget: "boolean", default: false, hint: "Wird nicht öffentlich angezeigt" }
+      - { label: "Inhalt", name: "body", widget: "markdown" }
+
+  - name: "tischreservierungen"
+    label: "Tischreservierungen"
+    folder: "src/content/tischreservierungen"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Datum", name: "date", widget: "datetime" }
+      - { label: "Typ", name: "type", widget: "select", options: ["feature", "fix", "improvement", "announcement"], default: "feature" }
+      - { label: "Version", name: "version", widget: "string", required: false, hint: "Optional, z.B. 2.0" }
+      - { label: "Entwurf", name: "draft", widget: "boolean", default: false, hint: "Wird nicht öffentlich angezeigt" }
+      - { label: "Inhalt", name: "body", widget: "markdown" }
+
+  - name: "app"
+    label: "App"
+    folder: "src/content/app"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Datum", name: "date", widget: "datetime" }
+      - { label: "Typ", name: "type", widget: "select", options: ["feature", "fix", "improvement", "announcement"], default: "feature" }
+      - { label: "Version", name: "version", widget: "string", required: false, hint: "Optional, z.B. 2.0" }
+      - { label: "Entwurf", name: "draft", widget: "boolean", default: false, hint: "Wird nicht öffentlich angezeigt" }
+      - { label: "Inhalt", name: "body", widget: "markdown" }
+
+  - name: "neuigkeiten"
+    label: "Neuigkeiten"
+    folder: "src/content/neuigkeiten"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Datum", name: "date", widget: "datetime" }
+      - { label: "Typ", name: "type", widget: "select", options: ["feature", "fix", "improvement", "announcement"], default: "announcement" }
+      - { label: "Version", name: "version", widget: "string", required: false, hint: "Optional, z.B. 2.0" }
+      - { label: "Entwurf", name: "draft", widget: "boolean", default: false, hint: "Wird nicht öffentlich angezeigt" }
+      - { label: "Inhalt", name: "body", widget: "markdown" }

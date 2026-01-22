@@ -1,7 +1,8 @@
 ---
 title: Changelog Archiv ab sofort verfügbar!
 date: 2025-12-28
-status: planned
+type: announcement
+draft: false
 ---
 
 Seit dem 28.12.2025 ist der offizielle Changelog für unsere Bringmal.de Produkte live. Dazu zählen unter anderem Tischreservierungen, Apps, Addons und Shop-Funktionen.

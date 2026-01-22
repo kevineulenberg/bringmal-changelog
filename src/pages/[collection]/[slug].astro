@@ -5,14 +5,16 @@ import { format } from 'date-fns';
 import { de } from 'date-fns/locale';
 
 export async function getStaticPaths() {
-  const changelogs = await getCollection('changelogs', ({ data }) => data.draft !== true);
-  const reservations = await getCollection('table-reservations', ({ data }) => data.draft !== true);
   const shop = await getCollection('shop', ({ data }) => data.draft !== true);
+  const tischreservierungen = await getCollection('tischreservierungen', ({ data }) => data.draft !== true);
+  const app = await getCollection('app', ({ data }) => data.draft !== true);
+  const neuigkeiten = await getCollection('neuigkeiten', ({ data }) => data.draft !== true);
 
   const allEntries = [
-    ...changelogs.map(entry => ({ params: { collection: 'changelogs', slug: entry.slug }, props: { entry } })),
-    ...reservations.map(entry => ({ params: { collection: 'table-reservations', slug: entry.slug }, props: { entry } })),
-    ...shop.map(entry => ({ params: { collection: 'shop', slug: entry.slug }, props: { entry } }))
+    ...shop.map(entry => ({ params: { collection: 'shop', slug: entry.slug }, props: { entry } })),
+    ...tischreservierungen.map(entry => ({ params: { collection: 'tischreservierungen', slug: entry.slug }, props: { entry } })),
+    ...app.map(entry => ({ params: { collection: 'app', slug: entry.slug }, props: { entry } })),
+    ...neuigkeiten.map(entry => ({ params: { collection: 'neuigkeiten', slug: entry.slug }, props: { entry } }))
   ];
 
   return allEntries;
@@ -22,35 +24,34 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 const data = entry.data;
 
-// Helper für Badges (Dupliziert aus index, idealerweise in utils.ts)
-// @ts-ignore
-const type = data.type || 'other';
-// @ts-ignore
-const status = data.status || 'live';
-const categoryRaw = data.category || (entry.collection === 'table-reservations' ? 'Table Reservations' : entry.collection === 'shop' ? 'Shop' : 'Other');
-const category = categoryRaw === 'Table Reservations' ? 'Tischreservierungen' : categoryRaw;
+// Helper für Badges
+const type = data.type || 'feature';
 
 const labels: Record<string, string> = {
     feature: 'Feature',
     fix: 'Fix',
-    breaking: 'Breaking',
-    live: 'Live',
-    planned: 'Geplant',
-    other: 'Update'
+    improvement: 'Verbesserung',
+    announcement: 'Ankündigung'
 };
 
 const colors: Record<string, string> = {
     feature: 'bg-emerald-100 text-emerald-800 border-emerald-200',
     fix: 'bg-blue-100 text-blue-800 border-blue-200',
-    breaking: 'bg-red-100 text-red-800 border-red-200',
-    live: 'bg-green-100 text-green-800 border-green-200',
-    planned: 'bg-amber-100 text-amber-800 border-amber-200',
+    improvement: 'bg-purple-100 text-purple-800 border-purple-200',
+    announcement: 'bg-amber-100 text-amber-800 border-amber-200',
     default: 'bg-gray-100 text-gray-800 border-gray-200'
 };
 
-const key = 'version' in data ? type : status;
-const label = labels[key] || key;
-const color = colors[key] || colors.default;
+const productLabels: Record<string, string> = {
+    shop: 'Shop',
+    tischreservierungen: 'Tischreservierungen',
+    app: 'App',
+    neuigkeiten: 'Neuigkeiten'
+};
+
+const label = labels[type] || type;
+const color = colors[type] || colors.default;
+const productLabel = productLabels[entry.collection] || entry.collection;
 
 ---
 
@@ -74,11 +75,9 @@ const color = colors[key] || colors.default;
            <span class={`px-3 py-1 rounded-full text-sm font-semibold border ${color} w-fit`}>
             {label}
           </span>
-          {category && (
-            <span class="text-sm text-gray-500 font-medium">
-              {category}
-            </span>
-          )}
+          <span class="text-sm text-gray-500 font-medium">
+            {productLabel}
+          </span>
           {'version' in data && (
             <span class="text-sm font-mono text-gray-400 mt-2 block">v{data.version}</span>
           )}

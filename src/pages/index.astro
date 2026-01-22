@@ -6,50 +6,53 @@ import { format } from 'date-fns';
 import { de } from 'date-fns/locale';
 
 // Daten holen (Drafts ausfiltern)
-const changelogs = await getCollection('changelogs', ({ data }) => data.draft !== true);
-const reservations = await getCollection('table-reservations', ({ data }) => data.draft !== true);
 const shop = await getCollection('shop', ({ data }) => data.draft !== true);
+const tischreservierungen = await getCollection('tischreservierungen', ({ data }) => data.draft !== true);
+const app = await getCollection('app', ({ data }) => data.draft !== true);
+const neuigkeiten = await getCollection('neuigkeiten', ({ data }) => data.draft !== true);
 
 // Alle Einträge kombinieren und sortieren
 const allEntries = [
-  ...changelogs,
-  ...reservations,
-  ...shop
+  ...shop,
+  ...tischreservierungen,
+  ...app,
+  ...neuigkeiten
 ].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 // Helper für Badges & Farben
 const getBadgeInfo = (entry: any) => {
-  const data = entry.data;
-  const isChangelog = 'version' in data;
-  
-  // @ts-ignore
-  const type = data.type || 'other';
-  // @ts-ignore
-  const status = data.status || 'live';
+  const type = entry.data.type || 'feature';
   
   const labels: Record<string, string> = {
     feature: 'Feature',
     fix: 'Fix',
-    breaking: 'Breaking',
-    live: 'Live',
-    planned: 'Geplant',
-    other: 'Update'
+    improvement: 'Verbesserung',
+    announcement: 'Ankündigung'
   };
 
   const colors: Record<string, string> = {
     feature: 'bg-emerald-100 text-emerald-800 border-emerald-200',
     fix: 'bg-blue-100 text-blue-800 border-blue-200',
-    breaking: 'bg-red-100 text-red-800 border-red-200',
-    live: 'bg-green-100 text-green-800 border-green-200',
-    planned: 'bg-amber-100 text-amber-800 border-amber-200',
+    improvement: 'bg-purple-100 text-purple-800 border-purple-200',
+    announcement: 'bg-amber-100 text-amber-800 border-amber-200',
     default: 'bg-gray-100 text-gray-800 border-gray-200'
   };
 
-  const key = isChangelog ? type : status;
   return {
-    label: labels[key] || key,
-    color: colors[key] || colors.default
+    label: labels[type] || type,
+    color: colors[type] || colors.default
   };
+};
+
+// Helper für Produkt-Labels
+const getProductLabel = (collection: string) => {
+  const labels: Record<string, string> = {
+    shop: 'Shop',
+    tischreservierungen: 'Tischreservierungen',
+    app: 'App',
+    neuigkeiten: 'Neuigkeiten'
+  };
+  return labels[collection] || collection;
 };
 
 // Helper für Plaintext Preview (entfernt Markdown Syntax grob)
@@ -97,17 +100,13 @@ const getFirstImage = (body: string) => {
       {allEntries.map(entry => {
         const data = entry.data;
         const { label, color } = getBadgeInfo(entry);
-        // @ts-ignore
-        const categoryRaw = data.category || (entry.collection === 'table-reservations' ? 'Table Reservations' : entry.collection === 'shop' ? 'Shop' : 'Other');
-        const category = categoryRaw === 'Table Reservations' ? 'Tischreservierungen' : categoryRaw;
-        // @ts-ignore
-        const filterType = data.type || 'other';
+        const productLabel = getProductLabel(entry.collection);
 
         return (
           <article 
             class="entry-item group md:flex gap-12"
-            data-category={categoryRaw}
-            data-type={filterType}
+            data-product={entry.collection}
+            data-type={data.type}
           >
             <!-- Linke Spalte: Sticky Meta -->
             <div class="md:w-[180px] flex-shrink-0 flex flex-col items-end text-right md:sticky md:top-32 self-start mb-4 md:mb-0 md:pr-6">
@@ -131,11 +130,11 @@ const getFirstImage = (body: string) => {
                     {data.title}
                   </a>
                 </h2>
-                {category && (
-                 
-
-                  <div class="flex flex-col items-start gap-2 mt-2"> <span class="px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-bold text-white" style="background-color: #7d7d7d"> {category} </span> </div>
-                )}
+                <div class="flex flex-col items-start gap-2 mt-2">
+                  <span class="px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-bold text-white" style="background-color: #7d7d7d">
+                    {productLabel}
+                  </span>
+                </div>
               </div>
 
               <!-- Content Preview -->
@@ -188,19 +187,19 @@ const getFirstImage = (body: string) => {
 <script>
   function handleFilterChange(e: Event) {
     const customEvent = e as CustomEvent;
-    const { category, type } = customEvent.detail;
+    const { product, type } = customEvent.detail;
     const items = document.querySelectorAll('.entry-item');
     let visibleCount = 0;
 
     items.forEach(item => {
-      const itemCategory = item.getAttribute('data-category');
+      const itemProduct = item.getAttribute('data-product');
       const itemType = item.getAttribute('data-type');
       
-      const matchesCategory = category === 'all' || itemCategory === category;
+      const matchesProduct = product === 'all' || itemProduct === product;
       const matchesType = type === 'all' || itemType === type;
 
       // @ts-ignore
-      if (matchesCategory && matchesType) {
+      if (matchesProduct && matchesType) {
         // @ts-ignore
         item.style.display = '';
         visibleCount++;

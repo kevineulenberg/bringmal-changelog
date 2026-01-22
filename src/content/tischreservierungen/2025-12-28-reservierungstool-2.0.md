@@ -1,9 +1,9 @@
 ---
 title: Bringmal Tischreservierungen 2.0
-version: "2.0"
 date: 2026-01-05T20:25:00.000+07:00
 type: feature
-category: Table Reservations
+version: "2.0"
+draft: false
 ---
 
 ![Vorschau Tischreservierung 1](/images/uploads/major-release-2-0-tables/table-screen-1.webp)

@@ -1,9 +1,9 @@
 ---
 title: Angebots-Addon – Flexible Deals für Abholung, Lieferung und zeitgesteuerte Aktionen
 date: 2026-01-15T01:44:00.000+07:00
-version: "2.0"
 type: feature
-category: Shop
+version: "2.0"
+draft: false
 ---
 
 Das Angebots-Addon erhält ein umfassendes Update mit vielen neuen Funktionen. Du kannst jetzt Rabattaktionen gezielt für Abholung oder Lieferung erstellen, Angebote im Voraus planen und sogar Extra-Zutaten in deine Prozent-Rabatte einbeziehen.
