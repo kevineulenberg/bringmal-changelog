@@ -1,0 +1,54 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import Thumb from '../components/Thumb.astro';
+import { formatDate } from '../utils/format';
+import { CATEGORY_LABELS } from '../utils/labels';
+import '../styles/article.css';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  related?: CollectionEntry<'blog'>[];
+}
+
+const { post, related = [] } = Astro.props;
+const d = post.data;
+---
+
+<BaseLayout title={`${d.title} – Bringmal Changelog`} description={d.excerpt}>
+  <article class="article">
+    <a class="article__back" href="/">←&nbsp; Changelog</a>
+
+    <p class="tag">{CATEGORY_LABELS[d.category]}{d.version && ` · v${d.version}`}</p>
+    <h1 class="article__title">{d.title}</h1>
+    <p class="meta article__meta">{formatDate(d.date)}&nbsp;&nbsp;·&nbsp;&nbsp;{d.readTime} Min. Lesezeit</p>
+
+    {d.image ? (
+      <div class="article__hero thumb thumb--img">
+        <img src={d.image} alt={d.title} />
+      </div>
+    ) : (
+      <Thumb
+        class="article__hero"
+        variant={d.thumb?.variant ?? 'mono'}
+        title={d.thumb?.title ?? d.title}
+        sub={d.thumb?.sub}
+        glyph={d.thumb?.glyph}
+      />
+    )}
+
+    <div class="prose">
+      <slot />
+    </div>
+  </article>
+
+  {related.length > 0 && (
+    <section class="related">
+      <h2 class="related__title">Weitere Beiträge</h2>
+      <div class="grid related__grid">
+        {related.map((p) => <PostCard post={p} />)}
+      </div>
+    </section>
+  )}
+</BaseLayout>

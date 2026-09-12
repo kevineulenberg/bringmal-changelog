@@ -1,0 +1,76 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import Thumb from '../components/Thumb.astro';
+import { formatDate } from '../utils/format';
+import { CATEGORY_LABELS } from '../utils/labels';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const featured = posts.find((p) => p.data.featured) ?? posts[0];
+const rest = posts.filter((p) => p.id !== featured.id);
+
+const VISIBLE_COUNT = 12;
+
+const presentCategories = [...new Set(posts.map((p) => p.data.category))];
+const filters = [
+  { label: 'Alle', value: 'all' },
+  ...presentCategories.map((c) => ({ label: CATEGORY_LABELS[c] ?? c, value: c })),
+];
+---
+
+<BaseLayout title="Changelog – Bringmal">
+  <div class="pagehead">
+    <h1>Changelog</h1>
+    <p class="pagehead__aside">Alle Produktneuheiten und Updates im Überblick.</p>
+  </div>
+
+  <a class="featured" href={`/blog/${featured.id}/`} data-cat={featured.data.category}>
+    {featured.data.image ? (
+      <div class="featured__media thumb thumb--img">
+        <img src={featured.data.image} alt={featured.data.title} />
+      </div>
+    ) : (
+      <Thumb
+        class="featured__media"
+        variant={featured.data.thumb?.variant ?? 'mono'}
+        title={featured.data.thumb?.title ?? featured.data.title}
+        xl
+      />
+    )}
+    <div class="featured__body">
+      <p class="tag">
+        {CATEGORY_LABELS[featured.data.category]}{featured.data.version && ` · v${featured.data.version}`}
+      </p>
+      <h2>{featured.data.title}</h2>
+      <p class="excerpt">{featured.data.excerpt}</p>
+      <p class="meta">{formatDate(featured.data.date)}&nbsp;&nbsp;·&nbsp;&nbsp;{featured.data.readTime} Min. Lesezeit</p>
+    </div>
+  </a>
+
+  <nav class="filters" id="filters" aria-label="Kategorien">
+    {filters.map((f, i) => (
+      <button
+        class:list={['filters__btn', { 'is-active': i === 0 }]}
+        data-filter={f.value}
+      >
+        {f.label}
+      </button>
+    ))}
+  </nav>
+
+  <section class="grid" id="grid">
+    {rest.map((post, i) => (
+      <PostCard post={post} extra={i >= VISIBLE_COUNT} />
+    ))}
+  </section>
+
+  <p class="grid__empty" id="grid-empty" hidden>Keine Beiträge in dieser Kategorie.</p>
+
+  {rest.length > VISIBLE_COUNT && (
+    <button class="more" id="show-more">Mehr Beiträge anzeigen</button>
+  )}
+</BaseLayout>

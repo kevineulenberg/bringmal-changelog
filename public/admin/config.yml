@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
+logo:
+  src: /images/uploads/logo.png
+
+backend:
+  name: github
+  repo: kevineulenberg/bringmal-changelog
+  branch: main
+  base_url: https://changelog.bringmal.app
+  auth_endpoint: oauth
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "blog"
+    label: "Changelog"
+    label_singular: "Beitrag"
+    folder: "src/content/blog"
+    extension: mdx
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Teaser-Text", name: "excerpt", widget: "text", hint: "Kurzer Text für die Karten-Ansicht (1–2 Sätze)" }
+      - { label: "Datum", name: "date", widget: "datetime" }
+      - { label: "Kategorie", name: "category", widget: "select", options: [{ label: "Shop", value: "shop" }, { label: "Tischreservierungen", value: "tischreservierungen" }, { label: "Neuigkeiten", value: "neuigkeiten" }, { label: "App", value: "app" }], default: "neuigkeiten" }
+      - { label: "Typ", name: "type", widget: "select", options: ["feature", "fix", "improvement", "announcement"], default: "feature" }
+      - { label: "Version", name: "version", widget: "string", required: false, hint: "Optional, z.B. 2.0" }
+      - { label: "Lesezeit (Min.)", name: "readTime", widget: "number", default: 3, value_type: "int", min: 1 }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false, hint: "Großer Beitrag oben im Archiv" }
+      - { label: "Entwurf", name: "draft", widget: "boolean", default: false, hint: "Wird nicht öffentlich angezeigt" }
+      - { label: "Bild", name: "image", widget: "image", required: false, hint: "Kartenbild + Hero im Artikel" }
+      - { label: "Inhalt", name: "body", widget: "markdown" }

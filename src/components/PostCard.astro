@@ -1,0 +1,36 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Thumb from './Thumb.astro';
+import { formatDate } from '../utils/format';
+import { CATEGORY_LABELS } from '../utils/labels';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  extra?: boolean;
+}
+
+const { post, extra = false } = Astro.props;
+const d = post.data;
+---
+
+<article class:list={['card', { 'card--more': extra }]} data-cat={d.category} hidden={extra}>
+  <a href={`/blog/${post.id}/`}>
+    {d.image ? (
+      <div class="thumb thumb--img">
+        <img src={d.image} alt={d.title} loading="lazy" />
+      </div>
+    ) : (
+      <Thumb
+        variant={d.thumb?.variant ?? 'mono'}
+        title={d.thumb?.title ?? d.title}
+        kicker={d.thumb?.kicker}
+        sub={d.thumb?.sub}
+        glyph={d.thumb?.glyph}
+      />
+    )}
+    <p class="tag">{CATEGORY_LABELS[d.category]}{d.version && ` · v${d.version}`}</p>
+    <h3>{d.title}</h3>
+    <p class="excerpt">{d.excerpt}</p>
+    <p class="meta">{formatDate(d.date)}&nbsp;&nbsp;·&nbsp;&nbsp;{d.readTime} Min. Lesezeit</p>
+  </a>
+</article>

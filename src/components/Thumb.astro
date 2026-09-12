@@ -1,0 +1,27 @@
+---
+interface Props {
+  variant: string;
+  title?: string;
+  kicker?: string;
+  sub?: string;
+  glyph?: string;
+  xl?: boolean;
+  class?: string;
+}
+
+const { variant, title, kicker, sub, glyph, xl = false, class: className } = Astro.props;
+const atTitle = variant === 'pixel';
+const boxGlyph = variant === 'wireframe';
+---
+
+<div class:list={['thumb', `thumb--${variant}`, className]}>
+  {kicker && <span class="thumb__kicker">{kicker}</span>}
+  {title && (
+    <span
+      class:list={['thumb__title', { 'thumb__title--xl': xl, 'thumb__title--at': atTitle }]}
+      set:html={title}
+    />
+  )}
+  {sub && <span class="thumb__sub">{sub}</span>}
+  {glyph && <span class:list={['thumb__glyph', { 'thumb__glyph--box': boxGlyph }]}>{glyph}</span>}
+</div>
