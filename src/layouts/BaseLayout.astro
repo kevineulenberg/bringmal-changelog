@@ -6,18 +6,43 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title: string;
   description?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  publishedTime?: string;
 }
 
-const { title, description = 'Read about our latest announcements.' } = Astro.props;
+const {
+  title,
+  description = 'Alle Produktneuheiten, Verbesserungen und Releases für Bringmal.de Produkte.',
+  image = '/logo.webp',
+  type = 'website',
+  publishedTime,
+} = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(image, Astro.site).href;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
   <meta name="description" content={description}>
+  <link rel="canonical" href={canonicalUrl}>
+  <meta property="og:type" content={type}>
+  <meta property="og:site_name" content="Bringmal Changelog">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:url" content={canonicalUrl}>
+  <meta property="og:image" content={ogImage}>
+  {publishedTime && <meta property="article:published_time" content={publishedTime}>}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={title}>
+  <meta name="twitter:description" content={description}>
+  <meta name="twitter:image" content={ogImage}>
   <link rel="icon" type="image/webp" href="/favicon.webp">
   <link rel="alternate" type="application/rss+xml" title="Bringmal Changelog" href="/rss.xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">

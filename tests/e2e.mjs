@@ -25,9 +25,9 @@ await page.goto(`${BASE}/`, { waitUntil: 'networkidle' });
 
 check('Titel enthält "Changelog"', (await page.title()).includes('Changelog'));
 check('H1 = "Changelog"', (await page.locator('.pagehead h1').innerText()) === 'Changelog');
-check('Featured-Titel sichtbar', await page.locator('.featured__body h2').innerText() === 'Bringmal Tischreservierungen 2.0');
+check('Featured-Titel sichtbar', (await page.locator('.featured__body h2').innerText()).includes('Bringmal 2026'));
 check('Featured-Bild vorhanden', await page.locator('.featured__media img').count() === 1);
-check('3 Karten im Grid (4 Posts minus Featured)', await page.locator('#grid .card').count() === 3);
+check('4 Karten im Grid (5 Posts minus Featured)', await page.locator('#grid .card').count() === 4);
 check('Filter-Buttons: Alle + Kategorien', await page.locator('.filters__btn').count() >= 3);
 
 // Bilder vollständig geladen
@@ -52,20 +52,24 @@ check('Featured bei "Neuigkeiten" ausgeblendet', await page.locator('.featured')
 
 await page.locator('.filters__btn[data-filter="tischreservierungen"]').click();
 await page.waitForTimeout(150);
-check('Filter "Tischreservierungen" → Featured bleibt sichtbar', await page.locator('.featured').isVisible());
-check('Filter "Tischreservierungen" → leeres Grid ausgeblendet', await page.locator('#grid').isHidden());
+visible = await page.locator('#grid .card:visible').count();
+check('Filter "Tischreservierungen" → 1 sichtbare Karte', visible === 1);
+check('Featured bei "Tischreservierungen" ausgeblendet (Featured = Shop)', await page.locator('.featured').isHidden());
 check('Kein Empty-State bei "Tischreservierungen"', await page.locator('#grid-empty').isHidden());
 
 await page.locator('.filters__btn[data-filter="all"]').click();
 await page.waitForTimeout(150);
 visible = await page.locator('#grid .card:visible').count();
-check('Filter "Alle" → 3 sichtbare Karten', visible === 3);
+check('Filter "Alle" → 4 sichtbare Karten', visible === 4);
 check('Featured bei "Alle" sichtbar', await page.locator('.featured').isVisible());
 check('Grid bei "Alle" wieder sichtbar', await page.locator('#grid').isVisible());
 
-console.log('\n== Artikel: Tischreservierungen 2.0 ==');
+console.log('\n== Artikel: Featured-Klick + Tischreservierungen 2.0 ==');
 await page.locator('.featured').click();
 await page.waitForLoadState('networkidle');
+check('Featured-Link → /blog/shop-update-2026/', page.url().includes('/blog/shop-update-2026/'));
+
+await page.goto(`${BASE}/blog/reservierungstool-2-0/`, { waitUntil: 'networkidle' });
 check('URL = /blog/reservierungstool-2-0/', page.url().includes('/blog/reservierungstool-2-0/'));
 check('H1 = Beitragstitel', (await page.locator('h1.article__title').innerText()).includes('Tischreservierungen'));
 check('Version-Badge "v2.0" im Tag', (await page.locator('.article .tag').innerText()).toLowerCase().includes('v2.0'));
@@ -102,7 +106,7 @@ console.log('\n== RSS-Feed & CMS ==');
 const rssRes = await page.goto(`${BASE}/rss.xml`);
 check('RSS-Feed erreichbar', rssRes.status() === 200);
 const rssBody = await rssRes.text();
-check('RSS enthält 4 Items', (rssBody.match(/<item>/g) || []).length === 4);
+check('RSS enthält 5 Items', (rssBody.match(/<item>/g) || []).length === 5);
 check('RSS de-DE + korrekte Links', rssBody.includes('<language>de-DE</language>') && rssBody.includes('/blog/reservierungstool-2-0/'));
 
 const adminRes = await page.goto(`${BASE}/admin/index.html`);
