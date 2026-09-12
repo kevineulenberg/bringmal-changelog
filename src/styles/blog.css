@@ -179,6 +179,21 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
   color: var(--gray-2);
 }
 
+.read-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 12px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--gray);
+  transition: color .15s ease;
+}
+
+.read-link span {
+  transition: transform .15s ease;
+}
+
 /* ---------- Filters ---------- */
 .filters {
   display: flex;
@@ -242,6 +257,11 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
 
 .card a:hover .thumb { transform: scale(1.015); }
 .card a:hover h3 { text-decoration: underline; text-underline-offset: 3px; }
+.card a:hover .read-link,
+.featured:hover .read-link { color: #e0561a; }
+
+.card a:hover .read-link span,
+.featured:hover .read-link span { transform: translateX(3px); }
 
 /* ---------- Thumbnails ---------- */
 .thumb {
