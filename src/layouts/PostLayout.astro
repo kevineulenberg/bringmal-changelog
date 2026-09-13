@@ -17,14 +17,14 @@ const d = post.data;
 ---
 
 <BaseLayout
-  title={`${d.title} – Bringmal Changelog`}
+  title={`${d.title} – Bringmal Produkt Updates`}
   description={d.excerpt}
   image={d.image}
   type="article"
   publishedTime={d.date.toISOString()}
 >
   <article class="article">
-    <a class="article__back" href="/">←&nbsp; Changelog</a>
+    <a class="article__back" href="/">←&nbsp; Bringmal Produkt Updates</a>
 
     <p class="tag">{CATEGORY_LABELS[d.category]}{d.version && ` · v${d.version}`}</p>
     <h1 class="article__title">{d.title}</h1>

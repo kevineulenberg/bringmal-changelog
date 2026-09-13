@@ -15,7 +15,7 @@ public_folder: "/images/uploads"
 
 collections:
   - name: "blog"
-    label: "Changelog"
+    label: "Bringmal Produkt Updates"
     label_singular: "Beitrag"
     folder: "src/content/blog"
     extension: mdx

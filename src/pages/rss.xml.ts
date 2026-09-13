@@ -11,7 +11,7 @@ export async function GET(context: APIContext) {
   );
 
   return rss({
-    title: 'Bringmal Changelog',
+    title: 'Bringmal Produkt Updates',
     description:
       'Alle Produktneuheiten, Verbesserungen und geplanten Beta Releases für Bringmal.de Produkte',
     site: context.site ?? 'https://changelog.bringmal.app',
