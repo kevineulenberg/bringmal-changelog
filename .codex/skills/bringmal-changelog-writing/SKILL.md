@@ -49,7 +49,7 @@ Use short, natural sentences. Do not use Unicode Gedankenstriche (`–` or `—`
 
 Read `src/content.config.ts` and `src/content/blog/_template.mdx` before adding an article. Create the MDX file under `src/content/blog/`; its file name determines the URL. Keep frontmatter valid for the collection schema and choose only an existing `category` and `type`.
 
-Use an available, relevant image as the `image` field when one is provided. Write descriptive alt text for images inside the article. Do not add decorative duplicate hero images to the body unless the image helps explain a different point.
+Use an available, relevant image as the `image` field when one is provided. The article layout renders this frontmatter image as the hero above the body, so do not repeat the same image path as an inline Markdown image. Add an inline image only when it is a different asset that explains a distinct point, and give it descriptive alt text.
 
 Review recent articles in the same category to avoid announcing the same feature twice or making a later improvement sound like the original launch. Use `draft: false` only when the user intends the article to be published.
 
